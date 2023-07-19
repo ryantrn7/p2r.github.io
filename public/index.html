@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Fortune on Your Path to Residency</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-image: url('https://images.unsplash.com/photo-1545013806-8e1d077550ca?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80&fbclid=IwAR1T3zC9ogYlrW8h6d3wgJS5FavG4axkXG7Zn9avmkooaE6TJYGpaoJrKsE');
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+
+    .container {
+      text-align: center;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      animation: fade-in 1s forwards;
+      z-index: 1;
+      max-width: 1163px;
+      max-height: 775px;
+      margin: 0 auto;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    .description {
+      font-size: 24px;
+      margin-bottom: 20px;
+      color: rgb(0, 0, 0); /* Set the color to black */
+    }
+    
+
+    @keyframes fade-in {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    .description {
+      font-size: 24px;
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: fade-in-description 0.8s forwards;
+    }
+
+    @keyframes fade-in-description {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: center;
+      opacity: 0;
+      animation: fade-in-buttons 1s 1.5s forwards;
+    }
+
+    @keyframes fade-in-buttons {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    .button {
+      padding: 10px 20px;
+      font-size: 18px;
+      background-color: #000000;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin: 10px;
+    }
+
+    .image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: fixed;
+      top: 0;
+      left: 0;
+      display: none;
+      opacity: 0;
+      animation: fade-in-image 1s forwards;
+      z-index: 0;
+    }
+
+    @keyframes fade-in-image {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    .counter {
+      font-size: 24px;
+      margin-top: 20px;
+      color: rgb(0, 0, 0); /* Set the color to black */
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <p class="description">Spread good luck wishes for PR and Citizenship in Canada. Click the button to send hope and support to others on their journey. Join our community and create a positive network of encouragement. Good luck to all!.</p>
+    <div class="button-container">
+      <button class="button" onclick="showButtonClickMe()">In</button>
+      <button class="button" onclick="showButtonImage()">Out</button>
+    </div>
+    <button class="button" id="clickMeButton" style="display: none;" onclick="countClicks()">Spread the Magic!</button>
+    <img class="image" id="userImage" src="https://t3.ftcdn.net/jpg/01/18/39/62/360_F_118396217_l02xTLRakFADBX5TY0CXjvDSh5BaW6y8.jpg" alt="User Image">
+    <p class="counter" id="clickCountText" style="display: none;">Wishful clicks: <span id="clickCount">Loading...</span></p>
+  </div>
+
+  <script>
+    let clickCount = 0;
+
+    function countClicks() {
+      fetch('/increment')
+        .then(response => response.json())
+        .then(data => {
+          clickCount = data.clickCount;
+          updateClickCount();
+        })
+        .catch(error => {
+          console.error('Error incrementing click count:', error);
+        });
+    }
+
+    function updateClickCount() {
+      const clickCountElement = document.getElementById('clickCount');
+      clickCountElement.textContent = clickCount;
+    }
+
+    fetch('/click-count')
+      .then(response => response.json())
+      .then(data => {
+        clickCount = data.clickCount;
+        updateClickCount();
+      })
+      .catch(error => {
+        console.error('Error fetching click count:', error);
+      });
+
+    function showButtonClickMe() {
+      const descriptionElement = document.querySelector('.description');
+      descriptionElement.style.display = 'none';
+
+      const buttonContainerElement = document.querySelector('.button-container');
+      buttonContainerElement.style.display = 'none';
+
+      const clickMeButtonElement = document.getElementById('clickMeButton');
+      clickMeButtonElement.style.display = 'block';
+
+      const clickCountTextElement = document.getElementById('clickCountText');
+      clickCountTextElement.style.display = 'block';
+
+      const containerElement = document.querySelector('.container');
+      containerElement.style.top = '50%';
+      containerElement.style.left = '50%';
+      containerElement.style.transform = 'translate(-50%, -50%)';
+
+            // Add the Facebook group link
+            const groupLinkElement = document.createElement('a');
+      groupLinkElement.textContent = 'Join our Facebook Group';
+      groupLinkElement.href = 'https://www.facebook.com/groups/1211834452836790/'; // Replace with your Facebook group URL
+      groupLinkElement.target = '_blank';
+
+      const clickCountText = document.getElementById('clickCountText');
+      clickCountText.appendChild(document.createElement('br')); // Add line break
+      clickCountText.appendChild(document.createElement('br')); // Add line break
+      clickCountText.appendChild(groupLinkElement);
+    }
+
+    function showButtonImage() {
+      const descriptionElement = document.querySelector('.description');
+      descriptionElement.style.display = 'none';
+
+      const buttonContainerElement = document.querySelector('.button-container');
+      buttonContainerElement.style.display = 'none';
+
+      const userImageElement = document.getElementById('userImage');
+      userImageElement.style.display = 'block';
+
+      const containerElement = document.querySelector('.container');
+      containerElement.style.top = '0';
+      containerElement.style.left = '0';
+      containerElement.style.transform = 'none';
+    }
+  </script>
+</body>
+</html>
