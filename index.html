@@ -142,11 +142,13 @@
     }
 
     function updateClickCount() {
-      const clickCountElement = document.getElementById('clickCount');
-      clickCountElement.textContent = clickCount;
-    }
+    const clickCountElement = document.getElementById('clickCount');
+    clickCountElement.textContent = clickCount;
+  }
 
-    fetch('/click-count')
+  // Fetch click count data from the API server
+  function fetchClickCount() {
+    fetch('https://main--p2pr.netlify.app/')
       .then(response => response.json())
       .then(data => {
         clickCount = data.clickCount;
@@ -155,6 +157,10 @@
       .catch(error => {
         console.error('Error fetching click count:', error);
       });
+  }
+
+  // Update the initial click count
+  fetchClickCount();
 
     function showButtonClickMe() {
       const descriptionElement = document.querySelector('.description');
