@@ -148,7 +148,7 @@
 
   // Fetch click count data from the API server
   function fetchClickCount() {
-    fetch('https://main--p2pr.netlify.app/')
+    fetch('https://main--p2pr.netlify.app/click-count')
       .then(response => response.json())
       .then(data => {
         clickCount = data.clickCount;
